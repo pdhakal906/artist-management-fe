@@ -1,4 +1,3 @@
-import React from 'react'
 import LoginForm from '../components/Forms/LoginForm'
 import { Box, Center } from '@mantine/core'
 

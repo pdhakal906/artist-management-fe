@@ -1,20 +1,16 @@
-import { AppShell, Burger, Group, Text } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
+import { AppShell, Text } from '@mantine/core';
 import { Outlet } from 'react-router'
 import SideBar from './SideBar';
 
 const RootLayout = () => {
-
-  const [opened, { toggle }] = useDisclosure();
-
   return (
     <>
       <AppShell
         header={{ height: 60 }}
         navbar={{
           width: { base: 100 },
-          breakpoint: 'sm',
-          collapsed: { mobile: !opened, desktop: !opened }
+          breakpoint: 0
+          // collapsed: { mobile: !opened, desktop: !opened }
         }}
 
       >
@@ -22,14 +18,14 @@ const RootLayout = () => {
           // zIndex={300}
           withBorder
         >
-          <Group>
-            <Burger opened={opened} onClick={toggle} p={5} mt={4} size="30px" />
-            <Text
-              fz={"h1"}
-              fw={700}
-              component="h1"
-            >Artist App</Text>
-          </Group>
+
+
+          <Text
+            fz={"h1"}
+            fw={700}
+            component="h1"
+          >Artist App</Text>
+
 
         </AppShell.Header>
         <AppShell.Navbar

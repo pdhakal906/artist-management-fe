@@ -1,17 +1,38 @@
-import { Box, Button, Center, Stack } from '@mantine/core'
-import { NavLink, useNavigate } from 'react-router'
-import { useAuth } from '../context/AuthContext';
+import { Box, Button, Center, Stack, NavLink } from '@mantine/core'
+import { useNavigate } from 'react-router'
+  ;
+import useAuthStore from '../features/store';
 
 const SideBar = () => {
-  const { user, role, logout } = useAuth();
+  const setLogout = useAuthStore((state) => state.setLogout);
+  const userInfo = useAuthStore((state) => state.user);
   const nav = useNavigate();
 
-  const handleClick = () => {
-    logout();
+  const handleClick = async () => {
+    await setLogout();
     nav('/login');
 
-  }
 
+  }
+  if (!userInfo) {
+    return (
+      <Box
+        p={'sm'}
+      >
+        <Center>
+          <Stack
+
+          >
+            <NavLink href="/" label="Home" />
+            <NavLink href="/login" label="Login" />
+            <NavLink href="/signup" label="Sign Up" />
+
+          </Stack>
+        </Center>
+      </Box>
+
+    );
+  }
   return (
     <Box
       p={'sm'}
@@ -20,12 +41,13 @@ const SideBar = () => {
         <Stack
 
         >
-
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/login">Login</NavLink>
-          <NavLink to="/signup">Signup</NavLink>
-          <NavLink to="/admin">Dashboard</NavLink>
-          <Button onClick={handleClick}>Logout</Button>
+          <NavLink href="/" label="Home" />
+          <NavLink href="/dashboard" label="Dashboard" />
+          <Button
+            variant='outline'
+            c={'black'}
+            bd={'1px solid black'}
+            onClick={handleClick}>Logout</Button>
 
         </Stack>
       </Center>

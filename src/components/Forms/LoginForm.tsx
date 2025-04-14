@@ -6,10 +6,12 @@ import { login } from '../../features/auth';
 import { notifications } from '@mantine/notifications';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import useAuthStore from '../../features/store';
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
+  const setLogin = useAuthStore((state) => state.setLogin);
 
   const loginSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -37,7 +39,8 @@ const LoginForm = () => {
           autoClose: 3000,
           position: 'top-right',
         })
-        nav('/admin')
+        setLogin(response.access_token);
+        nav('/dashboard')
       } catch (err) {
         notifications.show({
           title: err.status,

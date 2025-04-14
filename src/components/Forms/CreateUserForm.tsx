@@ -1,12 +1,11 @@
-import { Box, Button, PasswordInput, Select, Stack, TextInput } from '@mantine/core';
 import { useFormik } from 'formik';
+import { useState } from 'react'
 import * as Yup from "yup";
 import { signUp } from '../../features/auth';
 import { notifications } from '@mantine/notifications';
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-const SignUpForm = () => {
-  const nav = useNavigate();
+import { Box, Button, PasswordInput, Select, Stack, TextInput } from '@mantine/core';
+
+const CreateUserForm = ({ close, mutate }) => {
   const [loading, setLoading] = useState(false);
   const roles = [
     'artist_manager',
@@ -48,11 +47,13 @@ const SignUpForm = () => {
         if (response?.status === 200) {
           notifications.show({
             title: 'Success',
-            message: 'Sign up successful',
+            message: 'User created sucessfully!',
             color: 'green',
             position: 'top-right',
             autoClose: 5000,
           });
+          await mutate();
+          close();
         }
         else {
           notifications.show({
@@ -63,7 +64,7 @@ const SignUpForm = () => {
             autoClose: 5000,
           });
         }
-        nav('/login')
+
       }
       catch (error) {
         notifications.show({
@@ -189,7 +190,7 @@ const SignUpForm = () => {
           <Button type='submit'
             loaderProps={loading}
             disabled={loading}
-          >Sign Up</Button>
+          >Create User</Button>
         </Stack>
       </form>
     </Box>
@@ -197,4 +198,4 @@ const SignUpForm = () => {
   )
 }
 
-export default SignUpForm
+export default CreateUserForm

@@ -7,18 +7,18 @@ import { MantineProvider } from '@mantine/core';
 import App from './App.tsx'
 import '@mantine/notifications/styles.css';
 import { Notifications } from '@mantine/notifications';
-import { AuthProvider } from './context/AuthContext.tsx';
+
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <BrowserRouter>
-        <MantineProvider>
-          <Notifications />
-          <App />
-        </MantineProvider>
-      </BrowserRouter>
-    </AuthProvider>
+
+    <BrowserRouter>
+      <MantineProvider>
+        <Notifications />
+        <App />
+      </MantineProvider>
+    </BrowserRouter>
+
 
 
   </StrictMode >
