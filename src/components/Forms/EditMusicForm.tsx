@@ -106,7 +106,7 @@ const EditMusicForm = ({ music, mutate, close }) => {
           />
 
           <Button type="submit" loading={loading}>
-            Update Music
+            Update
           </Button>
         </Stack>
       </form>

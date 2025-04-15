@@ -7,7 +7,7 @@ export const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
 export const fetchUsers = async (page: number) => {
   const response = await getUsers(page);
-  return response; // return only the data part
+  return response;
 };
 
 export const fetchArtists = async (page: number) => {

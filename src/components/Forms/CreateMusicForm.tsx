@@ -17,8 +17,7 @@ const CreateMusicForm = (props: CreateMusicFormPropsType) => {
   const [pageDataLoading, setPageDataLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pageData, setPageData] = useState(null);
-  const [loading, setLoading] = useState(false); // you missed defining this before
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const loadData = async () => {
       try {

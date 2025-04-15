@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Box, Tabs } from '@mantine/core'
+import { Tabs } from '@mantine/core'
 
 import useAuthStore from '../../features/store';
 import ArtistTab from './ArtistTab';

@@ -5,8 +5,6 @@ import { useState } from "react";
 import { updateUser } from "../../features/user";
 import { notifications } from "@mantine/notifications";
 
-
-
 const EditUserForm = ({ user, mutate, close }) => {
   const [loading, setLoading] = useState(false);
 

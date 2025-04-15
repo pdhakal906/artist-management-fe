@@ -65,3 +65,33 @@ export const deleteArtist = async (id: number) => {
   const response = await api.delete(`/artist/${id}`);
   return response;
 };
+
+export const uploadArtistsCSV = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await api.post("/artist/upload-csv", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return response.data;
+};
+
+export const downloadArtistCsv = async () => {
+  try {
+    const response = await api.get("/artists/download");
+    const fileUrl = "http://127.0.0.1:8000" + response.data.url;
+
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.download = fileUrl.split("/").pop() ?? "artists.csv";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Download failed:", error);
+    alert("Failed to download artist CSV");
+  }
+};

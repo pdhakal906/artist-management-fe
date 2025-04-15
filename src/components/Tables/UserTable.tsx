@@ -1,5 +1,4 @@
 import { Button, Group, Table } from '@mantine/core';
-
 import CustomDrawer from '../CustomDrawer';
 import UserCard from '../Cards/UserCard';
 import { useDisclosure } from '@mantine/hooks';
@@ -114,7 +113,7 @@ const UserTable = (props: UserTablePropsType) => {
           </Group>
         </>
       </ConfirmModal>
-      <CustomDrawer onClose={close} opened={opened} title='View User'>
+      <CustomDrawer onClose={close} opened={opened} title='View/Edit User'>
         {action === 'view' ? (
           <UserCard userId={viewUserId} />
         ) : action === 'edit' ? (

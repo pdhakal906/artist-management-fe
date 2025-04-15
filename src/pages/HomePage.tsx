@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Group, List, Paper, Stack, Text, Title, } from "@mantine/core"
+import { Box, Button, Flex, Group, Paper, Stack, Text, Title, } from "@mantine/core"
 
 const HomePage = () => {
 

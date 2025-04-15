@@ -21,11 +21,7 @@ export const login = async (email: string, password: string) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Error during login:", error);
-    throw new Error(
-      "unable to login"
-      // error.response?.data || { detail: "Something went wrong during login." }
-    );
+    throw new Error("unable to login");
   }
 };
 
@@ -58,26 +54,17 @@ export const signUp = async (props: SignUpPropsType) => {
     return response;
   } catch (error) {
     if (error.response) {
-      // The request was made and the server responded with a status code
-      // that falls out of the range of 2xx
-      // console.log("Response Data:", error.response.data); // 👈 this is what you usually want
-      // console.log("Status Code:", error.response.status);
-      // console.log("Headers:", error.response.headers);
       return error;
     } else if (error.request) {
-      // The request was made but no response was received
-      console.log("No response received:", error.request);
       return error;
     } else {
-      // Something happened in setting up the request
-      console.log("Error setting up the request:", error.message);
       return error;
     }
   }
 };
 
 export const getUserRole = () => {
-  const token = session.get("token"); // token
+  const token = session.get("token");
   if (!token) return null;
 
   try {

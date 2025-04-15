@@ -2,7 +2,6 @@ import '@mantine/core/styles.css';
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from "react-router";
-// import './index.css'
 import { MantineProvider } from '@mantine/core';
 import App from './App.tsx'
 import '@mantine/notifications/styles.css';
@@ -18,8 +17,5 @@ createRoot(document.getElementById('root')!).render(
         <App />
       </MantineProvider>
     </BrowserRouter>
-
-
-
   </StrictMode >
 );

@@ -209,7 +209,7 @@ const CreateArtistForm = ({ close, mutate }) => {
           <Button type='submit'
             loaderProps={loading}
             disabled={loading}
-          >Create User</Button>
+          >Create Artist</Button>
         </Stack>
       </form>
     </Box>

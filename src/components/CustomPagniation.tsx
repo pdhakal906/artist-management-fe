@@ -14,7 +14,6 @@ const CustomPagination = (props: CustomPaginationPropType) => {
 
   const handlePageChange = (newPage: number) => {
     nav(`/news?page=${newPage}&page_size=10`);
-    console.log('clicked')
   };
 
   return (

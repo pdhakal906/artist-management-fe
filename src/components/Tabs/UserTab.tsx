@@ -11,7 +11,6 @@ const UserTab = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [opened, { open, close }] = useDisclosure(false);
 
-  // Use SWR to fetch users
   const { data, error, isLoading, mutate } = useSWR(['users', currentPage], () =>
     fetchUsers(currentPage)
   );

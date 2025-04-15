@@ -105,7 +105,7 @@ const MusicTable = (props: MusicTablePropsType) => {
           </Group>
         </>
       </ConfirmModal>
-      <CustomDrawer onClose={close} opened={opened} title='View /Edit Music'>
+      <CustomDrawer onClose={close} opened={opened} title='View/Edit Music'>
         {action === 'view' ? (
           <MusicCard musicId={viewMusicId} />
         ) : action === 'edit' ? (

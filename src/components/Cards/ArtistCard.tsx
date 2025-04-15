@@ -1,6 +1,5 @@
 import { Button, Card, Divider, Flex, Pagination, Stack, Text, Title } from "@mantine/core"
-
-import useSWR, { mutate } from "swr"
+import useSWR from "swr"
 import { getArtistById } from "../../features/artist"
 import MusicTable from "../Tables/MusicTable"
 import { getMusicByArtistId } from "../../features/music"
@@ -61,14 +60,12 @@ const ArtistCard = (props: ArtistCardPropsType) => {
         value={currentPage}
         onChange={setCurrentPage}
       />
-
       <CustomDrawer onClose={close} opened={opened} title='Add User'>
         <CreateMusicForm
           close={close} mutate={mutateMusic}
           artistId={String(artistId)}
         />
       </CustomDrawer>
-
     </>
   )
 }

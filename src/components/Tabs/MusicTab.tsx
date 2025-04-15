@@ -1,8 +1,7 @@
 import { Button, Flex, Pagination, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import React, { useState } from 'react'
+import { useState } from 'react'
 import useSWR from 'swr';
-import UserTable from '../Tables/UserTable';
 import CustomDrawer from '../CustomDrawer';
 import { fetchMusic } from '../../features/fetcher';
 import CreateMusicForm from '../Forms/CreateMusicForm';
@@ -34,7 +33,7 @@ const MusicTab = () => {
         onChange={setCurrentPage}
       />
 
-      <CustomDrawer onClose={close} opened={opened} title='Add User'>
+      <CustomDrawer onClose={close} opened={opened} title='Add Music'>
         <CreateMusicForm
           close={close} mutate={mutate}
         />

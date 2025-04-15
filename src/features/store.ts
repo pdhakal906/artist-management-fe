@@ -8,7 +8,6 @@ const useAuthStore = create((set) => ({
   user: null,
   isLoading: true,
 
-  // Initialize from localStorage
   initializeAuth: async () => {
     const token = session.get("token");
 
@@ -24,9 +23,7 @@ const useAuthStore = create((set) => ({
     set({ isLoading: false });
   },
 
-  // Set token and decode user
   setLogin: async (token) => {
-    // localStorage.setItem("token", token);
     session.set("token", token);
     try {
       const decoded = jwtDecode(token);
@@ -38,9 +35,7 @@ const useAuthStore = create((set) => ({
     set({ isLoading: false });
   },
 
-  // Clear token and user info
   setLogout: async () => {
-    // localStorage.removeItem("token");
     session.clear();
     set({ token: null, user: null, isLoading: false });
   },

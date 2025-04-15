@@ -6,7 +6,6 @@ const DashboardPage = () => {
 
   const userRole = user?.role;
 
-
   if (userRole === 'super_admin') {
     return <AdminDashboard />;
   }

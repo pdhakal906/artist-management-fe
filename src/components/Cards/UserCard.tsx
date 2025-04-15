@@ -1,20 +1,6 @@
 import { Card, Divider, Stack, Text, Title } from "@mantine/core"
 import { getUserById } from "../../features/user"
 import useSWR from "swr"
-
-interface UserType {
-  id: number
-  first_name: string
-  last_name: string
-  dob: string
-  role: string
-  phone: string
-  gender: string
-  address: string
-  created_at: string
-  updated_at: string
-}
-
 interface UserCardPropsType {
   userId: number | null
 }

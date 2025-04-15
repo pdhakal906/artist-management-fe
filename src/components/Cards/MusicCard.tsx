@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import useSWR from 'swr';
 import { getMusicById } from '../../features/music';
 import { Card, Divider, Stack, Text, Title } from '@mantine/core';
@@ -18,7 +17,6 @@ const MusicCard = (props: MusicCardPropsType) => {
   if (isLoading) {
     return <div>Loading...</div>
   }
-
 
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>

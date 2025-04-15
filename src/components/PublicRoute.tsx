@@ -4,7 +4,7 @@ import useAuthStore from '../features/store';
 
 const PublicRoute: React.FC = () => {
 
-  const { user, isLoading } = useAuthStore();
+  const { user } = useAuthStore();
 
   return user?.role ? <Navigate to="/dashboard" replace /> : <Outlet />;
 };

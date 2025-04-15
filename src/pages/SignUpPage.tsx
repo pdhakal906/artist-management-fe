@@ -3,14 +3,8 @@ import { Box, Center } from '@mantine/core'
 
 const SignUpPage = () => {
   return (
-    <Box
-    // p={'xl'}
-    // ml={'500px'}
-    >
-      <Center
-      // h={500}
-      // h={'100vh'}
-      >
+    <Box>
+      <Center>
         <SignUpForm />
       </Center>
     </Box>

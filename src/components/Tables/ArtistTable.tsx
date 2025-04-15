@@ -113,7 +113,7 @@ const ArtistTable = (props: ArtistTablePropsType) => {
           </Group>
         </>
       </ConfirmModal>
-      <CustomDrawer onClose={close} opened={opened} title='View /Edit Artist'>
+      <CustomDrawer onClose={close} opened={opened} title='View/Edit Artist'>
         {action === 'view' ? (
           <ArtistCard artistId={viewArtistId} />
         ) : action === 'edit' ? (
