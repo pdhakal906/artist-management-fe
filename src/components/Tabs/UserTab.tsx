@@ -1,11 +1,11 @@
 import useSWR from 'swr';
-import UserTable from './Tables/UserTable';
+import UserTable from '../Tables/UserTable';
 import { Button, Flex, Pagination, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import CustomDrawer from './CustomDrawer';
-import CreateUserForm from './Forms/CreateUserForm';
+import CustomDrawer from '../CustomDrawer';
+import CreateUserForm from '../Forms/CreateUserForm';
 import { useState } from 'react';
-import { fetchUsers } from '../features/fetcher';
+import { fetchUsers } from '../../features/fetcher';
 
 const UserTab = () => {
   const [currentPage, setCurrentPage] = useState(1);

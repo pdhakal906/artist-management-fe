@@ -1,42 +1,47 @@
-import * as Yup from "yup";
-import { useFormik } from 'formik';
 import { Box, Button, Select, Stack, TextInput } from '@mantine/core';
-import { useState } from "react";
-import { updateUser } from "../../features/user";
-import { notifications } from "@mantine/notifications";
+import { notifications } from '@mantine/notifications';
+import { useFormik } from 'formik';
+import React, { useState } from 'react'
+import * as Yup from "yup";
+import { updateArtist } from '../../features/artist';
 
 
+const EditArtistForm = ({ artist, mutate, close }) => {
 
-const EditUserForm = ({ user, mutate, close }) => {
   const [loading, setLoading] = useState(false);
 
-  const updateUserSchema = Yup.object().shape({
+  const updateArtistSchema = Yup.object().shape({
     first_name: Yup.string().required('First name is required'),
     last_name: Yup.string().required('Last name is required'),
     dob: Yup.string().required('Date of birth is required'),
     phone: Yup.string().required('Phone number is required'),
     gender: Yup.string().required('Gender is required'),
     address: Yup.string().required('Address is required'),
+    first_release_year: Yup.number().required('First release year is required'),
+    no_of_albums_released: Yup.number().required('Number of albums released is required'),
   });
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: user.id,
-      first_name: user.first_name,
-      last_name: user.last_name,
-      dob: user.dob,
-      phone: user.phone,
-      gender: user.gender,
-      address: user.address,
+      id: artist.id,
+      user_id: artist.user_id,
+      first_name: artist.first_name,
+      last_name: artist.last_name,
+      dob: artist.dob,
+      phone: artist.phone,
+      gender: artist.gender,
+      address: artist.address,
+      first_release_year: artist.first_release_year,
+      no_of_albums_released: artist.no_of_albums_released,
     },
     onSubmit: async (val) => {
       setLoading(true);
-      await updateUser(val);
-      mutate();
+      await updateArtist(val);
+      mutate(); // Revalidate the user data
       setLoading(false);
       notifications.show({
         title: 'Success',
-        message: 'User updated sucessfully!',
+        message: 'Artist updated sucessfully!',
         color: 'green',
         position: 'top-right',
         autoClose: 5000,
@@ -44,8 +49,9 @@ const EditUserForm = ({ user, mutate, close }) => {
       close();
 
     },
-    validationSchema: updateUserSchema
+    validationSchema: updateArtistSchema
   });
+
   return (
     <Box
       w={'100%'}
@@ -53,7 +59,6 @@ const EditUserForm = ({ user, mutate, close }) => {
       bg="var(--mantine-color-gray-light)"
 
     >
-
       <form onSubmit={formik.handleSubmit}>
         <Stack>
           <Box>
@@ -119,6 +124,26 @@ const EditUserForm = ({ user, mutate, close }) => {
               error={formik.touched.address && formik.errors.address}
             />
           </Box>
+          <Box>
+            <TextInput
+              name='first_release_year'
+              label="First Release Year"
+              value={formik.values.first_release_year}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.address && formik.errors.address}
+            />
+          </Box>
+          <Box>
+            <TextInput
+              name='no_of_albums_released'
+              label="No of Albums Released"
+              value={formik.values.no_of_albums_released}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.address && formik.errors.address}
+            />
+          </Box>
           <Button type='submit'
             loading={loading}
           >Update</Button>
@@ -128,4 +153,4 @@ const EditUserForm = ({ user, mutate, close }) => {
   )
 }
 
-export default EditUserForm
+export default EditArtistForm

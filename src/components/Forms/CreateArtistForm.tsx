@@ -3,24 +3,24 @@ import { useState } from 'react'
 import * as Yup from "yup";
 import { signUp } from '../../features/auth';
 import { notifications } from '@mantine/notifications';
-import { Box, Button, PasswordInput, Select, Stack, TextInput } from '@mantine/core';
+import { Box, Button, NumberInput, PasswordInput, Select, Stack, TextInput } from '@mantine/core';
+import { createArtist } from '../../features/artist';
 
-const CreateUserForm = ({ close, mutate }) => {
+const CreateArtistForm = ({ close, mutate }) => {
   const [loading, setLoading] = useState(false);
-  const roles = [
-    'artist_manager',
-  ];
 
-  const signUpSchema = Yup.object().shape({
+
+  const createArtistSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().required('Password is required'),
     first_name: Yup.string().required('First name is required'),
     last_name: Yup.string().required('Last name is required'),
     dob: Yup.string().required('Date of birth is required'),
-    role: Yup.string().required('Role is required'),
     phone: Yup.string().required('Phone number is required'),
     gender: Yup.string().required('Gender is required'),
     address: Yup.string().required('Address is required'),
+    first_release_year: Yup.number().required('First release year is required'),
+    no_of_albums_released: Yup.number().required('Number of albums released is required'),
   });
   const formik = useFormik({
     initialValues: {
@@ -29,10 +29,12 @@ const CreateUserForm = ({ close, mutate }) => {
       first_name: '',
       last_name: '',
       dob: '',
-      role: '',
+      role: 'artist',
       phone: '',
       gender: '',
       address: '',
+      first_release_year: '',
+      no_of_albums_released: '',
     },
     onSubmit: async (val) => {
       setLoading(true);
@@ -41,12 +43,20 @@ const CreateUserForm = ({ close, mutate }) => {
         const response = await signUp(
           val
         );
-        console.log("response from signup form is")
-        console.log(response)
+
         if (response?.status === 200) {
+
+          const userId = response?.data?.user?.id;
+          const artistData = {
+            user_id: userId,
+            first_release_year: Number(val.first_release_year),
+            no_of_albums_released: Number(val.no_of_albums_released),
+          };
+          await createArtist(artistData);
+
           notifications.show({
             title: 'Success',
-            message: 'User created sucessfully!',
+            message: 'Artist created sucessfully!',
             color: 'green',
             position: 'top-right',
             autoClose: 5000,
@@ -80,7 +90,7 @@ const CreateUserForm = ({ close, mutate }) => {
 
 
     },
-    validationSchema: signUpSchema
+    validationSchema: createArtistSchema
   });
 
   return (
@@ -144,18 +154,7 @@ const CreateUserForm = ({ close, mutate }) => {
               error={formik.touched.dob && formik.errors.dob}
             />
           </Box>
-          <Box>
-            <Select
-              label="Role"
-              placeholder="Choose a role"
-              data={roles}
-              name='role'
-              value={formik.values.role}
-              onChange={(value) => formik.setFieldValue('role', value)}
-              onBlur={formik.handleBlur}
-              error={formik.touched.role && formik.errors.role}
-            />
-          </Box>
+
           <Box>
             <TextInput
               name='phone'
@@ -189,6 +188,24 @@ const CreateUserForm = ({ close, mutate }) => {
               error={formik.touched.address && formik.errors.address}
             />
           </Box>
+          <Box>
+            <NumberInput
+              name="first_release_year"
+              label="First Release Year"
+              value={formik.values.first_release_year}
+              onChange={(value) => formik.setFieldValue("first_release_year", value)}
+              onBlur={formik.handleBlur}
+            />
+          </Box>
+          <Box>
+            <NumberInput
+              name="no_of_albums_released"
+              label="Number of Albums Released"
+              value={formik.values.no_of_albums_released}
+              onChange={(value) => formik.setFieldValue("no_of_albums_released", value)}
+              onBlur={formik.handleBlur}
+            />
+          </Box>
           <Button type='submit'
             loaderProps={loading}
             disabled={loading}
@@ -200,4 +217,4 @@ const CreateUserForm = ({ close, mutate }) => {
   )
 }
 
-export default CreateUserForm
+export default CreateArtistForm

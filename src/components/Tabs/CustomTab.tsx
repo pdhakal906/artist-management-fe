@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Box, Tabs } from '@mantine/core'
 
-import useAuthStore from '../features/store';
+import useAuthStore from '../../features/store';
 import ArtistTab from './ArtistTab';
 import UserTab from './UserTab';
+import MusicTab from './MusicTab';
 
 
 const CustomTab = () => {
@@ -26,11 +27,11 @@ const CustomTab = () => {
         <Tabs.List>
           <Tabs.Tab value="user">User Tab</Tabs.Tab>
           <Tabs.Tab value="artist">Artist Tab</Tabs.Tab>
-          <Tabs.Tab value="song">Song Tab</Tabs.Tab>
+          <Tabs.Tab value="music">Music Tab</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="user"><UserTab /></Tabs.Panel>
         <Tabs.Panel value="artist"><ArtistTab /></Tabs.Panel>
-        <Tabs.Panel value="song">Song Tab</Tabs.Panel>
+        <Tabs.Panel value="music"><MusicTab /></Tabs.Panel>
       </Tabs>
     );
   } else if (userRole === "artist_manager") {
@@ -38,19 +39,19 @@ const CustomTab = () => {
       <Tabs value={activeTab} keepMounted={false} onChange={setActiveTab}>
         <Tabs.List>
           <Tabs.Tab value="artist">Artist Tab</Tabs.Tab>
-          <Tabs.Tab value="song">Song Tab</Tabs.Tab>
+          <Tabs.Tab value="music">Music Tab</Tabs.Tab>
         </Tabs.List>
         <Tabs.Panel value="artist"><ArtistTab /></Tabs.Panel>
-        <Tabs.Panel value="song">Song Tab</Tabs.Panel>
+        <Tabs.Panel value="music"><MusicTab /></Tabs.Panel>
       </Tabs>
     );
   } else {
     return (
       <Tabs value={activeTab} keepMounted={false} onChange={setActiveTab}>
         <Tabs.List>
-          <Tabs.Tab value="song">Song Tab</Tabs.Tab>
+          <Tabs.Tab value="music">Music Tab</Tabs.Tab>
         </Tabs.List>
-        <Tabs.Panel value="song">Song Tab</Tabs.Panel>
+        <Tabs.Panel value="music"><MusicTab /></Tabs.Panel>
       </Tabs>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomTab from './CustomTab';
+import CustomTab from './Tabs/CustomTab';
 
 interface AdminDashboardPropsType {
   children: React.ReactNode;

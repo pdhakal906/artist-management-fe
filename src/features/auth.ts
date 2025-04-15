@@ -19,9 +19,6 @@ export const login = async (email: string, password: string) => {
       email,
       password,
     });
-    console.log("response");
-    console.log(response);
-
     return response.data;
   } catch (error) {
     console.error("Error during login:", error);

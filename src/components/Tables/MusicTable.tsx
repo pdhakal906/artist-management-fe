@@ -1,49 +1,44 @@
 import { Button, Group, Table } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { useState } from 'react';
-import { deleteArtist } from '../../features/artist';
 import { notifications } from '@mantine/notifications';
+import React, { useState } from 'react'
 import ConfirmModal from '../ConfirmModal';
 import CustomDrawer from '../CustomDrawer';
-import EditArtistForm from '../Forms/EditArtistForm';
-import ArtistCard from '../Cards/ArtistCard';
+import MusicCard from '../Cards/MusicCard';
+import EditMusicForm from '../Forms/EditMusicForm';
+import { deleteMusic } from '../../features/music';
 interface RowDataType {
-  first_name: string;
-  last_name: string;
-  gender: string;
-  email: string;
-  phone: string;
-  first_release_year: number;
-  no_of_albums_released: number;
-  user_id: number;
   id: number;
+  artist_id: number;
+  title: string;
+  album_name: string;
+  genre: string;
   created_at: string;
-  updated_at: string
+  updated_at: number;
 }
-
-interface ArtistTablePropsType {
+interface MusicTablePropsType {
   rowData: RowDataType[];
   mutate: VoidFunction;
 }
 
-
-const ArtistTable = (props: ArtistTablePropsType) => {
+const MusicTable = (props: MusicTablePropsType) => {
   const { rowData, mutate } = props;
+
   const [action, setAction] = useState<string>('view')
-  const [viewArtistId, setViewArtistId] = useState<number | null>(null);
+  const [viewMusicId, setViewMusicId] = useState<number | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
   const [openedConfirm, { open: openConfirm, close: closeConfirm }] = useDisclosure(false);
 
   const handleViewClick = (id: number) => () => {
     setAction('view');
-    setViewArtistId(id);
+    setViewMusicId(id);
     open();
 
   }
   const handleEditClick = (id: number) => () => {
     setAction('edit');
-    setViewArtistId(id);
+    setViewMusicId(id);
     open();
 
   }
@@ -51,15 +46,15 @@ const ArtistTable = (props: ArtistTablePropsType) => {
   const handleClickDelete = (id: number) => () => {
     openConfirm();
     setAction('delete');
-    setViewArtistId(id);
+    setViewMusicId(id);
   }
 
   const handleConfirmDelete = async () => {
-    if (!viewArtistId) return;
-    await deleteArtist(viewArtistId)
+    if (!viewMusicId) return;
+    await deleteMusic(viewMusicId);
     notifications.show({
       title: 'Success',
-      message: 'Artist deleted sucessfully!',
+      message: 'Music deleted sucessfully!',
       color: 'green',
       position: 'top-right',
       autoClose: 5000,
@@ -70,13 +65,10 @@ const ArtistTable = (props: ArtistTablePropsType) => {
 
   const rows = rowData.map((element) => (
     <Table.Tr key={element.id}>
-      <Table.Td>{element.first_name}</Table.Td>
-      <Table.Td>{element.last_name}</Table.Td>
-      <Table.Td>{element.gender}</Table.Td>
-      <Table.Td>{element.email}</Table.Td>
-      <Table.Td>{element.phone}</Table.Td>
-      <Table.Td>{element.first_release_year}</Table.Td>
-      <Table.Td>{element.no_of_albums_released}</Table.Td>
+      <Table.Td>{element.title}</Table.Td>
+      <Table.Td>{element.album_name}</Table.Td>
+      <Table.Td>{element.genre}</Table.Td>
+      <Table.Td>{element.artist_id}</Table.Td>
       <Table.Td>
         <Group>
           <Button onClick={handleViewClick(element.id)} size='xs'>View</Button>
@@ -88,24 +80,24 @@ const ArtistTable = (props: ArtistTablePropsType) => {
     </Table.Tr>
   ));
 
+
+
   return (
     <>
       <Table>
         <Table.Thead>
           <Table.Tr>
-            <Table.Th>First Name</Table.Th>
-            <Table.Th>Last Name</Table.Th>
-            <Table.Th>Gender</Table.Th>
-            <Table.Th>Email</Table.Th>
-            <Table.Th>Phone</Table.Th>
-            <Table.Th>First Release Year</Table.Th>
-            <Table.Th>No of Albums Released</Table.Th>
+            <Table.Th>Title</Table.Th>
+            <Table.Th>Album Name</Table.Th>
+            <Table.Th>Genre</Table.Th>
+            <Table.Th>Artist</Table.Th>
+            <Table.Th>Actions</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>{rows}</Table.Tbody>
       </Table>
 
-      <ConfirmModal close={closeConfirm} opened={openedConfirm} title='Delete Artist?'>
+      <ConfirmModal close={closeConfirm} opened={openedConfirm} title='Delete Music?'>
         <>
           <Group >
             <Button onClick={closeConfirm} variant='outline'>Cancel</Button>
@@ -113,20 +105,20 @@ const ArtistTable = (props: ArtistTablePropsType) => {
           </Group>
         </>
       </ConfirmModal>
-      <CustomDrawer onClose={close} opened={opened} title='View /Edit Artist'>
+      <CustomDrawer onClose={close} opened={opened} title='View /Edit Music'>
         {action === 'view' ? (
-          <ArtistCard artistId={viewArtistId} />
+          <MusicCard musicId={viewMusicId} />
         ) : action === 'edit' ? (
-          <EditArtistForm
+          <EditMusicForm
             mutate={mutate}
-            artist={rowData.find((item) => item.id === viewArtistId)}
+            music={rowData.find((item) => item.id === viewMusicId)}
             close={close}
           />
         ) : null}
       </CustomDrawer>
 
     </>
-  );
+  )
 }
 
-export default ArtistTable
+export default MusicTable

@@ -1,6 +1,7 @@
 import { Stack, Text } from "@mantine/core"
 import { useEffect, useState } from "react"
 import { getUserById } from "../../features/user"
+import useSWR from "swr"
 
 interface UserType {
   id: number
@@ -21,47 +22,28 @@ interface UserCardPropsType {
 
 const UserCard = (props: UserCardPropsType) => {
   const { userId } = props;
-  const [loading, setLoading] = useState(false);
 
-  const [user, setUser] = useState<UserType>({
-    id: 0,
-    first_name: '',
-    last_name: '',
-    dob: '',
-    role: '',
-    phone: '',
-    gender: '',
-    address: '',
-    created_at: '',
-    updated_at: ''
-  })
+  const { data, error, isLoading } = useSWR(['user', userId], () => getUserById(userId));
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      if (!userId) return;
-      const response = await getUserById(userId);
-      setUser(response.data);
-      setLoading(false);
-    }
-    fetchData();
-  }, [userId])
+  if (error) {
+    return <div>Error loading user</div>
+  }
 
-  if (loading) {
+  if (isLoading) {
     return <div>Loading...</div>
   }
   return (
     <div>
       <Stack>
-        <Text>{user.first_name}</Text>
-        <Text>{user.last_name}</Text>
-        <Text>{user.dob}</Text>
-        <Text>{user.role}</Text>
-        <Text>{user.phone}</Text>
-        <Text>{user.gender}</Text>
-        <Text>{user.address}</Text>
-        <Text>{user.created_at}</Text>
-        <Text>{user.updated_at}</Text>
+        <Text>{data.first_name}</Text>
+        <Text>{data.last_name}</Text>
+        <Text>{data.dob}</Text>
+        <Text>{data.role}</Text>
+        <Text>{data.phone}</Text>
+        <Text>{data.gender}</Text>
+        <Text>{data.address}</Text>
+        <Text>{data.created_at}</Text>
+        <Text>{data.updated_at}</Text>
       </Stack>
     </div>
   )
