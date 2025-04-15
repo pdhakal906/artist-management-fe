@@ -54,14 +54,26 @@ const UserTable = (props: UserTablePropsType) => {
 
   const handleConfirmDelete = async () => {
     if (!viewUserId) return;
-    await deleteUser(viewUserId)
+    const response = await deleteUser(viewUserId)
+    if (response.status == 204) {
+      notifications.show({
+        title: 'Success',
+        message: 'User deleted sucessfully!',
+        color: 'green',
+        position: 'top-right',
+        autoClose: 5000,
+      });
+    }
+
     notifications.show({
-      title: 'Success',
-      message: 'User deleted sucessfully!',
-      color: 'green',
+      title: 'Error',
+      message: response?.response?.data?.detail || 'Something went wrong!',
+      color: 'red',
       position: 'top-right',
       autoClose: 5000,
     });
+
+
     mutate();
     closeConfirm();
   }

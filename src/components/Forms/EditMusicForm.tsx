@@ -1,12 +1,20 @@
 import { notifications } from '@mantine/notifications';
 import { useFormik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import * as Yup from "yup";
 import { fetchMusicPageData } from '../../features/fetcher';
 import { Box, Button, Select, Stack, TextInput } from '@mantine/core';
 import { updateMusic } from '../../features/music';
 
-const EditMusicForm = ({ music, mutate, close }) => {
+interface EditMusicFormPropsType {
+  music: any;
+  mutate: VoidFunction;
+  close: VoidFunction;
+  artistId?: string;
+}
+
+const EditMusicForm = (props: EditMusicFormPropsType) => {
+  const { music, mutate, close, artistId } = props;
   const [loading, setLoading] = useState(false);
   const [pageDataLoading, setPageDataLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,16 +47,16 @@ const EditMusicForm = ({ music, mutate, close }) => {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-      id: music.id,
-      artist_id: String(music.artist_id),
-      title: music.title,
-      album_name: music.album_name,
-      genre: music.genre,
+      id: music?.id,
+      artist_id: artistId || String(music?.artist_id),
+      title: music?.title,
+      album_name: music?.album_name,
+      genre: music?.genre,
     },
     onSubmit: async (val) => {
       setLoading(true);
       await updateMusic(val);
-      mutate(); // Revalidate the user data
+      mutate();
       setLoading(false);
       notifications.show({
         title: 'Success',
@@ -86,7 +94,7 @@ const EditMusicForm = ({ music, mutate, close }) => {
             onBlur={formik.handleBlur}
             error={formik.touched.album_name && formik.errors.album_name}
           />
-          <Select
+          {!artistId && <Select
             name='artist_id'
             label="Artist"
             placeholder="Choose Artist"
@@ -94,7 +102,7 @@ const EditMusicForm = ({ music, mutate, close }) => {
             onBlur={formik.handleBlur}
             onChange={(value) => formik.setFieldValue("artist_id", value)}
             value={formik.values.artist_id}
-          />
+          />}
           <Select
             name="genre"
             label="Genre"

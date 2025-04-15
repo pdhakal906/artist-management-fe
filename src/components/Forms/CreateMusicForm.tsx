@@ -104,6 +104,7 @@ const CreateMusicForm = (props: CreateMusicFormPropsType) => {
             onBlur={formik.handleBlur}
             onChange={(value) => formik.setFieldValue("artist_id", value)}
             value={formik.values.artist_id}
+            error={formik.touched.artist_id && formik.errors.artist_id}
           />}
           <Select
             name="genre"
@@ -113,6 +114,8 @@ const CreateMusicForm = (props: CreateMusicFormPropsType) => {
             onBlur={formik.handleBlur}
             onChange={(value) => formik.setFieldValue("genre", value)}
             value={formik.values.genre}
+            error={formik.touched.genre && formik.errors.genre}
+
           />
 
           <Button type="submit" loading={loading}>

@@ -10,7 +10,7 @@ const SignUpForm = () => {
   const [loading, setLoading] = useState(false);
   const roles = [
     'artist_manager',
-    'artist'
+    'super_admin'
   ];
 
   const signUpSchema = Yup.object().shape({
@@ -167,14 +167,17 @@ const SignUpForm = () => {
             />
           </Box>
           <Box>
-            <TextInput
+            <Select
               name='gender'
               label="Gender"
+              placeholder="Choose a gender"
+              data={['male', 'female']}
               value={formik.values.gender}
-              onChange={formik.handleChange}
+              onChange={(value) => formik.setFieldValue("gender", value)}
               onBlur={formik.handleBlur}
               error={formik.touched.gender && formik.errors.gender}
-            />
+            >
+            </Select>
           </Box>
           <Box>
             <TextInput

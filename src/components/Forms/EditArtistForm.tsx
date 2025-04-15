@@ -13,11 +13,28 @@ const EditArtistForm = ({ artist, mutate, close }) => {
   const updateArtistSchema = Yup.object().shape({
     first_name: Yup.string().required('First name is required'),
     last_name: Yup.string().required('Last name is required'),
-    dob: Yup.string().required('Date of birth is required'),
+    dob: Yup.string()
+      .required('Date of birth is required')
+      .matches(
+        /^\d{4}-\d{2}-\d{2}$/,
+        'Date of birth must be in YYYY-MM-DD format'
+      ),
     phone: Yup.string().required('Phone number is required'),
     gender: Yup.string().required('Gender is required'),
     address: Yup.string().required('Address is required'),
-    first_release_year: Yup.number().required('First release year is required'),
+    first_release_year: Yup.number()
+      .typeError('First release year must be a number')
+      .required('First release year is required')
+      .test(
+        'is-after-dob',
+        'First release year must be greater than birth year',
+        function (value) {
+          const { dob } = this.parent;
+          const dobYear = dob?.substring(0, 4);
+          if (!dobYear || isNaN(dobYear)) return false;
+          return value > parseInt(dobYear, 10);
+        }
+      ),
     no_of_albums_released: Yup.number().required('Number of albums released is required'),
   });
   const formik = useFormik({
@@ -37,7 +54,7 @@ const EditArtistForm = ({ artist, mutate, close }) => {
     onSubmit: async (val) => {
       setLoading(true);
       await updateArtist(val);
-      mutate(); // Revalidate the user data
+      mutate();
       setLoading(false);
       notifications.show({
         title: 'Success',
@@ -131,7 +148,7 @@ const EditArtistForm = ({ artist, mutate, close }) => {
               value={formik.values.first_release_year}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              error={formik.touched.address && formik.errors.address}
+              error={formik.touched.first_release_year && formik.errors.first_release_year}
             />
           </Box>
           <Box>

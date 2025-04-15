@@ -60,7 +60,7 @@ const ArtistCard = (props: ArtistCardPropsType) => {
         value={currentPage}
         onChange={setCurrentPage}
       />
-      <CustomDrawer onClose={close} opened={opened} title='Add User'>
+      <CustomDrawer onClose={close} opened={opened} title='Add Music'>
         <CreateMusicForm
           close={close} mutate={mutateMusic}
           artistId={String(artistId)}

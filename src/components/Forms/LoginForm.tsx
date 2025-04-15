@@ -62,7 +62,6 @@ const LoginForm = () => {
   return (
 
     <Box
-      //  p={'xl'}
       w={'100%'}
       bg="var(--mantine-color-gray-light)"
       p={'lg'}

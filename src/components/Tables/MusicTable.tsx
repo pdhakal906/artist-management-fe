@@ -1,12 +1,13 @@
 import { Button, Group, Table } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { notifications } from '@mantine/notifications';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ConfirmModal from '../ConfirmModal';
 import CustomDrawer from '../CustomDrawer';
 import MusicCard from '../Cards/MusicCard';
 import EditMusicForm from '../Forms/EditMusicForm';
 import { deleteMusic } from '../../features/music';
+import useAuthStore from '../../features/store';
 interface RowDataType {
   id: number;
   artist_id: number;
@@ -25,10 +26,22 @@ const MusicTable = (props: MusicTablePropsType) => {
   const { rowData, mutate } = props;
 
   const [action, setAction] = useState<string>('view')
+  const [artistId, setArtistId] = useState<number | null>(null);
   const [viewMusicId, setViewMusicId] = useState<number | null>(null);
   const [opened, { open, close }] = useDisclosure(false);
 
+  const { user } = useAuthStore();
+
   const [openedConfirm, { open: openConfirm, close: closeConfirm }] = useDisclosure(false);
+
+
+  useEffect(() => {
+    if (user?.role === 'artist') {
+      setArtistId(user?.id);
+    }
+  }, [])
+
+
 
   const handleViewClick = (id: number) => () => {
     setAction('view');
@@ -112,6 +125,7 @@ const MusicTable = (props: MusicTablePropsType) => {
           <EditMusicForm
             mutate={mutate}
             music={rowData.find((item) => item.id === viewMusicId)}
+            artistId={artistId}
             close={close}
           />
         ) : null}
