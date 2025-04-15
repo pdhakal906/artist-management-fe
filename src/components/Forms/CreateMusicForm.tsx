@@ -5,7 +5,15 @@ import { notifications } from '@mantine/notifications';
 import { Box, Button, Select, Stack, TextInput } from '@mantine/core';
 import { fetchMusicPageData } from '../../features/fetcher';
 import { createMusic } from '../../features/music';
-const CreateMusicForm = ({ close, mutate }) => {
+
+interface CreateMusicFormPropsType {
+  close: VoidFunction
+  mutate: VoidFunction
+  artistId?: string
+}
+
+const CreateMusicForm = (props: CreateMusicFormPropsType) => {
+  const { close, mutate, artistId } = props;
   const [pageDataLoading, setPageDataLoading] = useState(true);
   const [error, setError] = useState(null);
   const [pageData, setPageData] = useState(null);
@@ -33,7 +41,7 @@ const CreateMusicForm = ({ close, mutate }) => {
 
   const formik = useFormik({
     initialValues: {
-      artist_id: '',
+      artist_id: artistId || '',
       title: '',
       album_name: '',
       genre: '',
@@ -49,7 +57,7 @@ const CreateMusicForm = ({ close, mutate }) => {
           position: 'top-right',
           autoClose: 5000,
         });
-        await mutate();
+        mutate();
         close();
       } catch (error) {
         notifications.show({
@@ -89,7 +97,7 @@ const CreateMusicForm = ({ close, mutate }) => {
             onBlur={formik.handleBlur}
             error={formik.touched.album_name && formik.errors.album_name}
           />
-          <Select
+          {!artistId && <Select
             name='artist_id'
             label="Artist"
             placeholder="Choose Artist"
@@ -97,7 +105,7 @@ const CreateMusicForm = ({ close, mutate }) => {
             onBlur={formik.handleBlur}
             onChange={(value) => formik.setFieldValue("artist_id", value)}
             value={formik.values.artist_id}
-          />
+          />}
           <Select
             name="genre"
             label="Genre"

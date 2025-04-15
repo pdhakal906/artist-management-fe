@@ -18,7 +18,7 @@ const CustomTab = () => {
     } else if (userRole === 'artist_manager') {
       setActiveTab('artist');
     } else if (userRole === 'artist') {
-      setActiveTab('song');
+      setActiveTab('music');
     }
   }, [userRole])
   if (userRole === "super_admin") {

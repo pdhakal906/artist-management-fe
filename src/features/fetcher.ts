@@ -1,6 +1,6 @@
 import api from "./api";
 import { getArtists } from "./artist";
-import { getMusic, getMusicPageData } from "./music";
+import { getMusic, getMusicByArtistId, getMusicPageData } from "./music";
 import { getUsers } from "./user";
 
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);
@@ -17,6 +17,11 @@ export const fetchArtists = async (page: number) => {
 
 export const fetchMusic = async (page: number) => {
   const response = await getMusic(page);
+  return response;
+};
+
+export const fetchMusicByArtistId = async (artistId: number) => {
+  const response = await getMusicByArtistId(artistId);
   return response;
 };
 

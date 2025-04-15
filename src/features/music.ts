@@ -20,6 +20,11 @@ export const getMusicById = async (id: number) => {
   return response.data;
 };
 
+export const getMusicByArtistId = async (artistId: number) => {
+  const response = await api.get(`/music/artist/${artistId}`);
+  return response.data;
+};
+
 export const getMusicPageData = async () => {
   const response = await api.get(`/music/page-data`);
   return response.data;

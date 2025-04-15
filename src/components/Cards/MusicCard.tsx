@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import useSWR from 'swr';
 import { getMusicById } from '../../features/music';
-import { Stack, Text } from '@mantine/core';
+import { Card, Divider, Stack, Text, Title } from '@mantine/core';
 interface MusicCardPropsType {
   musicId: number
 }
@@ -21,15 +21,18 @@ const MusicCard = (props: MusicCardPropsType) => {
 
 
   return (
-    <div>
-      <Stack>
-        <Text>{data.title}</Text>
-        <Text>{data.album_name}</Text>
-        <Text>{data.genre}</Text>
-        <Text>{data.artist_id}</Text>
+    <Card shadow="sm" padding="lg" radius="md" withBorder>
+      <Stack gap="xs">
+        <Title order={4}>Song Details</Title>
+        <Divider my="sm" />
+
+        <Text><strong>Title:</strong> {data.title}</Text>
+        <Text><strong>Album Name:</strong> {data.album_name}</Text>
+        <Text><strong>Genre:</strong> {data.genre}</Text>
+        <Text><strong>Artist ID:</strong> {data.artist_id}</Text>
       </Stack>
-    </div>
-  )
+    </Card>
+  );
 }
 
 export default MusicCard

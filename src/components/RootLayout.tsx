@@ -10,27 +10,22 @@ const RootLayout = () => {
         navbar={{
           width: { base: 100 },
           breakpoint: 0
-          // collapsed: { mobile: !opened, desktop: !opened }
         }}
 
       >
         <AppShell.Header
-          // zIndex={300}
           withBorder
         >
-
-
           <Text
+            px={10}
             fz={"h1"}
             fw={700}
             component="h1"
-          >Artist App</Text>
+          >ArtistFlow</Text>
 
 
         </AppShell.Header>
         <AppShell.Navbar
-          // p="md"
-          // zIndex={300}
           className='border-none'
         >
           <SideBar />
